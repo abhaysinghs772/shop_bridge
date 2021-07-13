@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/shop_bridge_DB", { useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
 
 const itemSchema = {
     name: String,
@@ -115,7 +116,10 @@ app.post('/', function (req, res) {
 app.post("/delete", function (req, res) {
     const checkedItemId = req.body.checkbox;
     const listName = req.body.listName;
-    if (listName === "shop bridge") {
+    console.log(checkedItemId);
+    console.log(listName);
+
+    if (listName === "Shop Bridge") {
         Item.findByIdAndRemove(checkedItemId, function (err) {
             if (err) {
                 console.log(err);
